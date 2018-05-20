@@ -1,0 +1,8 @@
+{
+  "name": "svc",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "dependencies": {
+    "handlebars": "^4.0.11"
+  }
+}

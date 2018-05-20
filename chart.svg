@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="{{@page.width}}" height="{{@page.height}}">
+  <style type="text/css"><![CDATA[
+    text {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.8em;
+    }
+    
+    #legend text {
+      font-family: monospace;
+      transform: translate(20px, 9px);
+    }
+    
+    {{#if-equals @page.type "pie"}}
+    circle {
+      fill: none;
+      stroke-width: {{@page.chart.diameter}};
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+    {{else}}
+    #x-axis text {
+      transform: translate(0px, 20px);
+    }
+    
+    #y-axis text {
+      transform: translate(-20px, 5px);
+    }
+    {{/if-equals}}
+    
+    {{#if-equals @page.type "line"}}
+    #values polyline {
+      fill: none;
+      stroke-width: 3;
+      stroke-linejoin: round;
+    }
+    {{/if-equals}}
+  ]]></style>
+  
+  <!-- legend -->
+  <g id="legend">
+    {{#each @page.legend}}
+    <rect x="{{x}}" y="{{y}}" width="10" height="10" fill="{{color}}"/>
+    {{#each lines}}
+    <text x="{{x}}" y="{{y}}">{{label}}</text>
+    {{/each}}
+    {{/each}}
+  </g>
+  
+  {{#if-equals @page.type "pie"}}
+    <!-- based on https://www.smashingmagazine.com/2015/07/designing-simple-pie-charts-with-css/ -->
+    {{#each @page.values}}
+    <circle r="{{@page.chart.radius}}" cx="{{@page.chart.x}}" cy="{{@page.chart.y}}" style="
+      stroke: {{color}};
+      stroke-dasharray: {{value}} {{@page.chart.circumference}};
+      ">
+    </circle>
+    {{/each}}
+  {{else}}
+    <!-- x-axis -->
+    <g id="x-axis">
+      {{#each @page.xAxis}}
+        {{#if @page.drawVerticalLines}}
+        <rect x="{{x}}" y="{{@page.chart.yStart}}"
+            width="1" height="{{@page.chart.height}}"
+            fill="#CCC"/>
+        {{/if}}
+        <rect x="{{x}}" y="{{@page.chart.yEnd}}" width="1" height="10" fill="#888"/>
+        <text x="{{xText}}" y="{{@page.chart.yEnd}}" text-anchor="middle">{{label}}</text>
+      {{/each}}
+      {{#if @page.drawVerticalLines}}
+      <rect x="{{@page.chart.xEnd}}" y="{{@page.chart.yStart}}"
+          width="1" height="{{@page.chart.height}}"
+          fill="#CCC"/>
+      {{/if}}
+      <rect x="{{@page.chart.xEnd}}" y="{{@page.chart.yEnd}}"
+          width="1" height="10" fill="#888"/>
+    </g>
+    
+    <!-- y-axis -->
+    <g id="y-axis">
+      {{#each @page.yAxis}}
+      <rect x="{{x}}" y="{{y}}" width="{{width}}" height="1" fill="#888"/>
+      <text x="{{x}}" y="{{y}}" text-anchor="end">{{label}}</text>
+      {{/each}}
+    </g>
+    
+    <!-- values -->
+    <g id="values">
+      {{#switch @page.type}}
+        {{#case "bar-grouped"}}
+          {{#each @page.values}}
+            {{#each this}}
+            <rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" fill="{{color}}"/>
+            {{/each}}
+          {{/each}}
+        {{/case}}
+        {{#case "line"}}
+          {{#each @page.values}}
+          <polyline stroke="{{color}}"
+            points="
+            {{#each values}}
+            {{#if this}}{{x}}, {{y}}{{/if}}
+            {{/each}}
+            "/>
+          {{/each}}
+        {{/case}}
+      {{/switch}}
+    </g>
+  {{/if-equals}}
+</svg>
