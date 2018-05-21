@@ -96,6 +96,13 @@
             {{/each}}
           {{/each}}
         {{/case}}
+        {{#case "bar-stacked"}}
+          {{#each @page.values}}
+            {{#each this}}
+            <rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" fill="{{color}}"/>
+            {{/each}}
+          {{/each}}
+        {{/case}}
         {{#case "line"}}
           {{#each @page.values}}
           <polyline stroke="{{color}}"

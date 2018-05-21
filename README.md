@@ -26,12 +26,13 @@ console.log(svg);
 
 - **string** type - _Chart type_
   - `bar-grouped`
+  - `bar-stacked`
   - `line`
   - `pie`
 - **string[]** [colors] - _Colors for y-axis (e.g. `#F00`)_
 - **string[]** [display] - _Display options_
   - `vertical-lines` - _Show vertical grid lines_
-  - `y-start-min` - _Start y-axis at minimum value rather than `0`_
+  - `y-start-min` - _Start y-axis at minimum value rather than `0` (incompatible with charts of type `bar-stacked`)_
 - **number[]|string[]** x - _Labels for x-axis_
 - **number[]|string[]** y - _Labels for y-axis_
 - **number[][]** values - _Chart values_
