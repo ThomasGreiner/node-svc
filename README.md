@@ -31,6 +31,7 @@ console.log(svg);
   - `pie`
 - **string[]** [colors] - _Colors for y-axis (e.g. `#F00`)_
 - **string[]** [display] - _Display options_
+  - `flow` - _Show flow lines between values (only compatible with charts of type `bar-stacked`)_
   - `vertical-lines` - _Show vertical grid lines_
   - `y-start-min` - _Start y-axis at minimum value rather than `0` (incompatible with charts of type `bar-stacked`)_
 - **number[]|string[]** x - _Labels for x-axis_

@@ -102,6 +102,9 @@
             {{/each}}
           {{/case}}
           {{#case "bar-stacked"}}
+            {{#each @page.flows}}
+            <polyline points="{{#each coords}}{{this.[0]}} {{this.[1]}}{{#unless @last}}, {{/unless}}{{/each}}" fill="{{color}}" opacity="0.50"/>
+            {{/each}}
             {{#each @page.values}}
               {{#each this}}
               <rect x="{{x}}" y="{{y}}" width="{{width}}" height="{{height}}" fill="{{color}}"/>
